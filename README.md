@@ -11,7 +11,11 @@ TODO
 * ~~Make absolute file paths be sent~~ Done
 * ~~Impliment replacement of username in absolute file paths~~ Done
 * Impliment error catching
+* Provide option to change assigned port.
+* provide option to turn of name changing.
+* Provide option to send files to multiple computers at once.
 
 Known Issues
 ------------
 * Binding the receiving machine to any other address other than *localhost* or *0.0.0.0* fails to assign requested address.
+
