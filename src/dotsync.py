@@ -13,6 +13,21 @@ from send import send
 
 files = [] #the list to contain all the file names
 
+
+def show_help():
+    
+    print("dotsync [options] [address] [file]")
+    print("-r           Set to receive files from another computer which is activly sending")
+    print("-s           Set to send files to an external computer or server which is activly looking to receive.")
+    print("-g           Get files from remote server")
+    print("-sf          Read files to send from a list of files and send them. File to read from is placed after [address]")
+    #print("-n           Replace the user name in the sender's file paths with the username of the receiver. This argument must be placed after -s or -sf")
+    print("-h           Shows this message.")
+    print("[address]    The address either of the server to receive from, or computer or server to send too. This is not required if receiving from another computer")
+    return
+
+
+
 if sys.argv[1] == '-r':
     length = len(sys.argv)
     if length < 3: #if there is no files following the option, the error.
@@ -38,7 +53,7 @@ if sys.argv[1] == '-s':
 if sys.argv[1] == '-sf':
     length = len(sys.argv)
     if length < 3:
-       print("Missing argument after -s")
+       print("Missing argument after -sf")
        sys.exit()
     address = sys.argv[2] #let address = the address entered through commanf line args.
 
@@ -49,32 +64,23 @@ if sys.argv[1] == '-sf':
         sys.exit()
 
     files = list(f)
-    print files
 
     
     for x in range(0, len(files)):
-        files[x] = files[x].rstrip('\n')
-        print files[x]
-        print x
-    print ("files: "),files
-
-   # for x in range(0, len(files)):
-   #     print files[x]
-   #     files[x].replace(files[x], files[x].rstrip('\n')) #read into files.
-   #     print files[x]
+        files[x] = files[x].rstrip('\n') #strip all the \n newlines from the file names in the file.
 
     for x in range(1, (len(sys.argv) - 3)): #add all the file names to a list.
         files.append(sys.argv[x+3])
     send(files, sys.argv[2])
     sys.exit()
 
-else:
-    print("dotsync [options] [address] [file]")
-    print("-r           Set to receive files from another computer which is activly sending")
-    print("-s           Set to send files to an external computer or server which is activly looking to receive.")
-    print("-g           Get files from remote server")
-    print("-sf           Read files to send from a list of files and send them. File to read from is placed after [address]")
-    print("[address]    The address either of the server to receive from, or computer or server to send too. This is not required if receiving from another computer")
+if sys.argv[1] == '-h':
+    show_help()
 
+
+else:
+    show_help()
+
+    
 
 
