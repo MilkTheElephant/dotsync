@@ -28,17 +28,28 @@ def receive_files(socket):
     
     for x in range(0, int(fileno)):
         print("Receiving file "), x+1 , ("of "), fileno
-        path.append(socket.recv(1024)) #get path of incomming file
-        time.sleep(0.5)
-        size = socket.recv(1024) #get size of file
-        time.sleep(0.5)
-        buff = socket.recv(int(size)) #get actual file content
-        print("Writing file to "), path[x] 
-        f = open(path[x], 'wb') #open new file
-        f.write(buff) #write content to file.
-        print ("File written")
-        socket.send('1')
-        time.sleep(0.5)
+        dat = socket.recv(1024)
+        print ("dat: ")
+        print dat
+
+        if dat != "null":
+            path.append(dat) #get path of incomming file
+            time.sleep(0.5)
+            size = socket.recv(1024) #get size of file
+            time.sleep(0.5)
+            buff = socket.recv(int(size)) #get actual file content
+            print x+1
+            print len(path)
+            print("Writing file to "), path[x-1] 
+            f = open(path[x-1], 'wb') #open new file
+            f.write(buff) #write content to file.
+            print ("File written")
+            socket.send('1')
+            time.sleep(0.5)
+        else:
+            print("File number '"),x+1,(" is being ignored by sender.")
+            time.sleep(0.5)
+                        
     return      
        
     

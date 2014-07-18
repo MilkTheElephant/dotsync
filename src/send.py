@@ -23,24 +23,35 @@ def handshake(address):
 def send_files(files, socket):
     print len(files)
     socket.sendall(str(len(files))) #send number of files
-    print (files)    
+    print (files)
 
     for x in range(0, len(files)):
-        dat = os.path.abspath(files[x]) #send the paths for each file
-        print dat
-        socket.send(dat) 
-        time.sleep(0.5)
-        f = open(files[x], 'rb') #open file for read
-        data = f.read() #read data in
-        size = len(data) #get size of data
-        socket.send(str(size)) #send size of file
-        time.sleep(0.5) 
-        socket.send(data) #send data
-        time.sleep(0.5)
-        msg = socket.recv(512)
-        if msg  == '1':
-            print ("Sending of file "),x+1 ,("Was succsessful")
-        time.sleep(1)
+        
+        print x
+
+        if os.path.exists(files[x]): #make sure the file actually exists
+            dat = os.path.abspath(files[x]) #send the paths for each file
+            print dat
+            socket.send(dat) 
+            time.sleep(0.5)
+            f = open(files[x], 'rb') #open file for read
+            print ("opened: "), files[x]
+            data = f.read() #read data in
+            size = len(data) #get size of data
+            print("sending size: "), size
+            socket.send(str(size)) #send size of file
+            time.sleep(0.5) 
+            socket.send(data) #send data
+            time.sleep(0.5)
+            msg = socket.recv(512)
+            if msg  == '1':
+                print ("Sending of file "),x+1 ,("Was succsessful")
+            time.sleep(0.5)
+            dat = ""
+        else:
+            socket.send("null") #If file doesnt exist, tell the server.
+            time.sleep(0.5)
+            print("File '"), files[x], ("' does not exist. Ignoring it.")
            
     return
 

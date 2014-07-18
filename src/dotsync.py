@@ -4,13 +4,13 @@
 #A script allowing a user to sync their dot files between computers or to upload them to a server.
 #This script is the client version of the script, it is used to send files and can be used to receive files too.
 
+import os
 import sys
 import subprocess
 import socket
 from receive import receive
 from send import send
 
-#address #the var to contain the address
 files = [] #the list to contain all the file names
 
 if sys.argv[1] == '-r':
@@ -35,13 +35,46 @@ if sys.argv[1] == '-s':
     send(files, sys.argv[2])
     sys.exit()
 
+if sys.argv[1] == '-sf':
+    length = len(sys.argv)
+    if length < 3:
+       print("Missing argument after -s")
+       sys.exit()
+    address = sys.argv[2] #let address = the address entered through commanf line args.
+
+    if os.path.exists(sys.argv[3]):
+        f = open(sys.argv[3], 'r') #open the file containing lists of files.
+    else:
+        print ("File '"), sys.argv[3], ("' Does not exist")
+        sys.exit()
+
+    files = list(f)
+    print files
+
+    
+    for x in range(0, len(files)):
+        files[x] = files[x].rstrip('\n')
+        print files[x]
+        print x
+    print ("files: "),files
+
+   # for x in range(0, len(files)):
+   #     print files[x]
+   #     files[x].replace(files[x], files[x].rstrip('\n')) #read into files.
+   #     print files[x]
+
+    for x in range(1, (len(sys.argv) - 3)): #add all the file names to a list.
+        files.append(sys.argv[x+3])
+    send(files, sys.argv[2])
+    sys.exit()
+
 else:
     print("dotsync [options] [address] [file]")
     print("-r           Set to receive files from another computer which is activly sending")
     print("-s           Set to send files to an external computer or server which is activly looking to receive.")
     print("-g           Get files from remote server")
+    print("-sf           Read files to send from a list of files and send them. File to read from is placed after [address]")
     print("[address]    The address either of the server to receive from, or computer or server to send too. This is not required if receiving from another computer")
-
 
 
 
