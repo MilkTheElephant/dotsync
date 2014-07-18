@@ -6,6 +6,8 @@ Copy your dotfiles (or anyfiles) from one machine, to exactly the same location 
 
 TODO
 --------
-* Make absolute file paths be sent
+* ~~Impliment reading from extnal file which contains pre-defined file paths ~~ Done
+* ~~Impliment checks for file existance before opening file~~
+* ~~Make absolute file paths be sent~~ Done
 * Impliment replacement of username in absolute file paths
 * Impliment error catching
