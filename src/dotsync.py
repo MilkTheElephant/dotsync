@@ -36,7 +36,7 @@ if sys.argv[1] == '-r':
     
     for x in range(1, (len(sys.argv) - 1)): #add all the file names following to the list.
         files.append(sys.argv[x+1])
-    receive()
+    receive(sys.argv[2])
     sys.exit()
 
 if sys.argv[1] == '-s':

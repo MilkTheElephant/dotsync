@@ -6,9 +6,9 @@ import getpass
 
 path = [] #list to hold file paths
 
-def handshake():
+def handshake(address):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open socket
-    s.bind(('localhost',5010)) #bind socket
+    s.bind((address,5010)) #bind socket
     s.listen(1) #wait for connection
     conn, addr = s.accept() #accept one connection
     print("accepted connection")
@@ -52,8 +52,8 @@ def receive_files(socket):
        
     
 
-def receive():
+def receive(address):
     print ("Receive started")
-    socket = handshake()
+    socket = handshake(address)
     receive_files(socket)
     sys.exit()
